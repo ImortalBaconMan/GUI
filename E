@@ -1,0 +1,575 @@
+local ScreenGui = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local Background = Instance.new("ImageLabel")
+local TopFrame = Instance.new("Frame")
+local Background_2 = Instance.new("ImageLabel")
+local Tabs = Instance.new("Folder")
+local UIGridLayout = Instance.new("UIGridLayout")
+local More = Instance.new("Folder")
+local UIGridLayout_2 = Instance.new("UIGridLayout")
+local TabFrames = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local Transparent = .2
+local lib = {}
+
+Whitelisted = {}
+
+
+repeat wait() until game:IsLoaded()
+
+function SendNotification(Title, Text, Icon, Time)
+    game.StarterGui:SetCore("SendNotification", {
+    Title = Title;
+    Text = Text;
+    Icon = Icon;
+    Duration = Time;
+})
+
+end
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+function lib:CreateButton(Name, Text, TextButtonParent, script)
+    local TextButton = Instance.new("TextButton")
+    TextButton.Name = Name
+    TextButton.Parent = ScreenGui:FindFirstChild(TextButtonParent,  true)
+    TextButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    TextButton.BorderColor3 = Color3.fromRGB(130, 203, 255)
+    TextButton.BorderSizePixel = 0
+    TextButton.Size = UDim2.new(0.114795908, 0, 1, 0)
+    TextButton.Font = Enum.Font.SourceSans 
+    TextButton.Text = Text
+    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.TextSize = 14.000
+    TextButton.Transparency = Transparent
+    TextButton.MouseButton1Click:Connect(function()
+        script()
+    end)
+    TextButton.MouseEnter:Connect(function()
+        TextButton.BorderSizePixel = 1
+    end)
+    TextButton.MouseLeave:Connect(function()
+        TextButton.BorderSizePixel = 0
+    end)
+end
+
+function lib:CreateTextBox(Name, Text, TextButtonParent, script)
+    local TextButton = Instance.new("TextBox")
+    TextButton.Name = Name
+    TextButton.Parent = TextButtonParent
+    TextButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    TextButton.BorderColor3 = Color3.fromRGB(130, 203, 255)
+    TextButton.BorderSizePixel = 0
+    TextButton.Size = UDim2.new(0.114795908, 0, 1, 0)
+    TextButton.Font = Enum.Font.SourceSans 
+    TextButton.Text = Text
+    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.TextSize = 14.000
+    TextButton.Transparency = Transparent
+    TextButton.MouseButton1Click:Connect(function()
+        script()
+    end)
+    TextButton.MouseEnter:Connect(function()
+        TextButton.BorderSizePixel = 1
+    end)
+    TextButton.MouseLeave:Connect(function()
+        TextButton.BorderSizePixel = 0
+    end)
+end
+function lib:CreateButton2(Name, Text, TextButtonParent, script)
+    local TextButton = Instance.new("TextButton")
+    TextButton.Name = Name
+    TextButton.Parent = TextButtonParent
+    TextButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    TextButton.BorderColor3 = Color3.fromRGB(130, 203, 255)
+    TextButton.BorderSizePixel = 0
+    TextButton.Size = UDim2.new(0.114795908, 0, 1, 0)
+    TextButton.Font = Enum.Font.SourceSans 
+    TextButton.Text = Text
+    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.TextSize = 14.000
+     TextButton.Transparency = Transparent
+    TextButton.MouseButton1Click:Connect(function()
+        script()
+    end)
+    TextButton.MouseEnter:Connect(function()
+        TextButton.BorderSizePixel = 1
+    end)
+    TextButton.MouseLeave:Connect(function()
+        TextButton.BorderSizePixel = 0
+    end)
+end
+Main.Name = "Main"
+Main.Parent = ScreenGui
+Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.685818195, 0, 0.171212122, 0)
+Main.Size = UDim2.new(0.285090953, 0, 0.674242437, 0)
+Main.ZIndex = 5
+Main.Transparency = Transparent
+Main.Draggable = true
+
+Background.Name = "Background"
+Background.Parent = Main
+Background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background.BackgroundTransparency = 1.000
+Background.Size = UDim2.new(1, 0, 1, 0)
+Background.Image = "rbxassetid://2172512945"
+Background.Transparency = Transparent
+Background.Draggable = true
+
+TopFrame.Name = "TopFrame"
+TopFrame.Parent = Main
+TopFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TopFrame.BackgroundTransparency = 0.500
+TopFrame.BorderSizePixel = 0
+TopFrame.Size = UDim2.new(1, 0, 0.0696629211, 0)
+
+Background_2.Name = "Background"
+Background_2.Parent = TopFrame
+Background_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background_2.BackgroundTransparency = 1.000
+Background_2.Size = UDim2.new(1, 0, 1, 0)
+Background_2.Image = "rbxassetid://2172512945"
+Background_2.ScaleType = Enum.ScaleType.Crop
+
+Tabs.Name = "Tabs"
+Tabs.Parent = TopFrame
+Tabs.ChildAdded:Connect(function(obj)
+    if obj and obj:IsA("TextButton") then
+        obj.MouseButton1Click:Connect(function()
+            TabFrames:FindFirstChild(obj.Name).Visible = true
+            for _, v in pairs(TabFrames:GetChildren()) do
+                if v:IsA("Frame") and v.Name ~= obj.Name then
+                    v.Visible = false
+                end
+            end
+        end)
+    end
+end)
+Tabs.ChildAdded:Connect(function(obj)
+    if obj:IsA("TextButton") then
+        local objFrame = Instance.new("Frame")
+
+        objFrame.Name = obj.Name
+        objFrame.Parent = TabFrames
+        objFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        objFrame.BackgroundTransparency = 1.000
+        objFrame.Size = UDim2.new(0.954, 0,0.954, 0)
+        objFrame.Position = UDim2.new(0.02, 0,0.017, 0)
+        objFrame.Visible = false
+        objFrame.ChildAdded:Connect(function(v)
+            if v:IsA("TextButton") then
+                v.MouseEnter:Connect(function()
+                v.BorderSizePixel = 1
+            end)
+        v.MouseLeave:Connect(function()
+        v.BorderSizePixel = 0
+    end)
+            end
+        end)
+        local UIGridLayout = Instance.new("UIGridLayout")
+
+        UIGridLayout.Parent = objFrame
+        UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        UIGridLayout.CellPadding = UDim2.new(0, 10, 0, 20)
+        UIGridLayout.CellSize = UDim2.new(0.188999996, 0, 0.0970000029, 0)
+    end
+end)
+
+
+
+UIGridLayout.Parent = Tabs
+UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIGridLayout.CellPadding = UDim2.new(0, 1, 0, 5)
+UIGridLayout.CellSize = UDim2.new(0.115000002, 0, 1, 0)
+
+More.Name = "More"
+More.Parent = Tabs
+
+UIGridLayout_2.Parent = More
+UIGridLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Right
+UIGridLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+UIGridLayout_2.CellSize = UDim2.new(0.115000002, 0, 1, 0)
+
+TabFrames.Name = "TabFrames"
+TabFrames.Parent = Main
+TabFrames.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TabFrames.BackgroundTransparency = 1.000
+TabFrames.Position = UDim2.new(0, 0, 0.0696629211, 0)
+TabFrames.Size = UDim2.new(1, 0, 0.930337071, 0)
+
+TextButton.Parent = Main_3
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.Size = UDim2.new(0, 200, 0, 50)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 14.000
+
+function Others()
+    TabFrames:WaitForChild("Others").UIGridLayout:Destroy()
+    local Title = Instance.new("TextLabel")
+    local TextLabel = Instance.new("TextLabel")
+    local UIListLayout = Instance.new("UIListLayout")
+
+    UIListLayout.Parent = TabFrames:WaitForChild("Others")
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder 
+
+    Title.Name = "Title"
+    Title.Parent = TabFrames:WaitForChild("Others")
+    Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Title.BackgroundTransparency = 1.000
+    Title.Size = UDim2.new(1, 0, 0.0403994955, 0)
+    Title.Font = Enum.Font.SourceSans
+    Title.Text = "Credits to"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextScaled = true
+    Title.TextSize = 14.000
+    Title.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextWrapped = true
+
+    TextLabel.Parent = TabFrames:WaitForChild("Others")
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Size = UDim2.new(1, 0, 0.0403994955, 0)
+    TextLabel.Font = Enum.Font.SourceSans
+    TextLabel.Text = "ImmortalBaconMan - Scripter/UI"
+    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.TextScaled = true
+    TextLabel.TextSize = 14.000
+    TextLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.TextWrapped = true
+end
+function WhiteList() 
+    TabFrames:WaitForChild("WhiteList").UIGridLayout:Destroy()
+    local AddWhiteList = Instance.new("TextBox")
+    local ScrollingFrame = Instance.new("ScrollingFrame")
+    local UIGridLayout = Instance.new("UIGridLayout")
+
+
+    AddWhiteList.Name = "AddWhiteList"
+    AddWhiteList.Parent = TabFrames.WhiteList
+    AddWhiteList.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    AddWhiteList.BackgroundTransparency = 0.200
+    AddWhiteList.BorderColor3 = Color3.fromRGB(130, 203, 255)
+    AddWhiteList.BorderSizePixel = 0
+    AddWhiteList.Size = UDim2.new(0.188999996, 0, 0.0970000029, 0)
+    AddWhiteList.Font = Enum.Font.SourceSans
+    AddWhiteList.PlaceholderText = "Plr Name"
+    AddWhiteList.Text = ""
+    AddWhiteList.TextColor3 = Color3.fromRGB(255, 255, 255)
+    AddWhiteList.TextSize = 14.000
+    AddWhiteList.TextTransparency = 0.200
+
+    ScrollingFrame.Parent = TabFrames.WhiteList
+    ScrollingFrame.Active = true
+    ScrollingFrame.BackgroundColor3 = Color3.fromRGB(112, 112, 112)
+    ScrollingFrame.BackgroundTransparency = 0.900
+    ScrollingFrame.Position = UDim2.new(0.542827129, 0, -0.0178196933, 0)
+    ScrollingFrame.Size = UDim2.new(0, 181, 0, 413)
+
+    UIGridLayout.Parent = ScrollingFrame
+    UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout.CellPadding = UDim2.new(0, 10, 0, 20)
+    UIGridLayout.CellSize = UDim2.new(0.8, 0,0.048, 0)
+
+    -- Scripts:
+
+        AddWhiteList.FocusLost:Connect(function(plr)
+        if game:GetService("Players"):FindFirstChild(AddWhiteList.Text) and AddWhiteList.Text ~= game:GetService("Players").LocalPlayer.Name and not table.find(Whitelisted, AddWhiteList.Text) then
+                local TextLabel = Instance.new("TextLabel")
+                
+                TextLabel.Name = AddWhiteList.Text
+                TextLabel.Parent = ScrollingFrame
+                TextLabel.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
+                TextLabel.Size = UDim2.new(0.879608095, 0, 0.047509592, 0)
+                TextLabel.Font = Enum.Font.SourceSans
+                TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                TextLabel.TextSize = 14.000
+                TextLabel.Text = AddWhiteList.Text
+                TextLabel.BorderSizePixel = 0
+                table.insert(Whitelisted, AddWhiteList.Text)
+                print(Whitelisted[1])
+                
+
+                local TextButton = Instance.new("TextButton")
+                
+                TextButton.Parent = TextLabel
+                TextButton.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
+                TextButton.BorderSizePixel = 0
+                TextButton.Position = UDim2.new(0.996986449, 0, 0, 0)
+                TextButton.Size = UDim2.new(0.196383879, 0, 1, 0)
+                TextButton.Font = Enum.Font.SourceSans
+                TextButton.Text = "X"
+                TextButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+                TextButton.TextSize = 14.000
+                
+                TextButton.MouseButton1Click:Connect(function()
+                    wait()
+                    table.remove(Whitelisted, table.find(Whitelisted, TextLabel.Text))
+                    print("Done")
+                    TextLabel:Destroy()
+                end)
+                
+        end
+    end)
+end
+--Tabs
+lib:CreateButton("Visuals", "Visuals", "Tabs")
+lib:CreateButton("Player", "Player", "Tabs")
+lib:CreateButton("Game Mods", "Game Mods", "Tabs")
+lib:CreateButton("Teleport", "Teleport", "Tabs")
+lib:CreateButton("Farm", "Farm", "Tabs")
+lib:CreateButton("WhiteList", "WhiteList", "Tabs")
+lib:CreateButton("Others", "Others", "Tabs")
+-- End of tabs
+-- Visuals
+lib:CreateButton2("Esp", "Esp", TabFrames.Visuals, function()
+    local dwRunService = game:GetService("RunService")
+
+local settings = {
+    Chams = true
+    
+    
+}
+
+    if settings.Chams then
+         for _, c in pairs(game:GetService("Players"):GetPlayers()) do
+        for _, v in pairs(c.Character:GetChildren()) do
+            if  v:IsA("BasePart") and c.Name ~= game:GetService("Players").LocalPlayer.Name and not v:FindFirstChildOfClass("BoxHandleAdornment") then
+                local chams_box = Instance.new("BoxHandleAdornment", v)
+                chams_box.Name = "Chams"
+                chams_box.AlwaysOnTop = true 
+                chams_box.ZIndex = 4 
+                chams_box.Adornee = v
+                chams_box.Color3 = Color3.new(255,255,255)
+                chams_box.Transparency = .6
+                chams_box.Size = v.Size + Vector3.new(0.02, 0.02, 0.02)
+            end
+        end
+    end
+    elseif not settings.Chams then
+            for _, v in pairs(game:GetService("Players"):GetChildren()) do
+            if v.Character then
+                for _, Cham in pairs(v.Character:GetDescendants()) do
+                    if Cham:IsA("BoxHandleAdornment") then
+                        Cham:Destroy()
+                    end
+                end
+            end
+        end
+    end
+
+
+dwRunService.Heartbeat:Connect(function()
+    if settings.Chams then
+    for _, c in pairs(game:GetService("Players"):GetPlayers()) do
+        for _, v in pairs(c.Character:GetChildren()) do
+            if  v:IsA("BasePart") and c.Name ~= game:GetService("Players").LocalPlayer.Name and not v:FindFirstChildOfClass("BoxHandleAdornment") then
+                local chams_box = Instance.new("BoxHandleAdornment", v)
+                chams_box.Name = "Chams"
+                chams_box.AlwaysOnTop = true 
+                chams_box.ZIndex = 4 
+                chams_box.Adornee = v
+                chams_box.Color3 = Color3.new(255,255,255)
+                chams_box.Transparency = .6
+                chams_box.Size = v.Size + Vector3.new(0.02, 0.02, 0.02)
+            end
+        end
+    end
+    end
+end)
+
+
+dwRunService.Heartbeat:Connect(function()
+    for _, v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Backpack:FindFirstChild("Gun") then
+            for _, c in pairs(v.Character:GetDescendants()) do
+                if c:IsA("BoxHandleAdornment") then
+                    c.Color3 = Color3.new(0,0,255)
+                end
+            end
+        elseif not v.Backpack:FindFirstChild("Gun") then
+            if v.Character:FindFirstChild("Gun") then
+                for _, c in pairs(v.Character:GetDescendants()) do
+                if c:IsA("BoxHandleAdornment") then
+                    c.Color3 = Color3.new(0,0,255)
+                end
+                end
+            end
+        end
+    end
+end)
+
+dwRunService.Heartbeat:Connect(function()
+    for _, v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Backpack:FindFirstChild("Knife") then
+            for _, c in pairs(v.Character:GetDescendants()) do
+                if c:IsA("BoxHandleAdornment") then
+                    c.Color3 = Color3.new(255,0,0)
+                end
+            end
+        elseif not v.Backpack:FindFirstChild("Knife") then
+            if v.Character:FindFirstChild("Knife") then
+                for _, c in pairs(v.Character:GetDescendants()) do
+                if c:IsA("BoxHandleAdornment") then
+                    c.Color3 = Color3.new(255,0,0)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+
+
+
+dwRunService.Heartbeat:Connect(function()
+    if not settings.Chams then
+        for _, v in pairs(game:GetService("Players"):GetChildren()) do
+            if v.Character then
+                for _, Cham in pairs(v.Character:GetDescendants()) do
+                    if Cham:IsA("BoxHandleAdornment") then
+                        Cham:Destroy()
+                    end
+                end
+            end
+        end
+    end
+end)
+    SendNotification("Esp", "Loaded", "" , "3")
+end)
+
+lib:CreateButton2("Shoot Murd", "Shoot Murd (C)", TabFrames["Game Mods"], function()
+local UIS = game:GetService("UserInputService")
+local RS = game:GetService("RunService")
+local MURD = nil
+
+UIS.InputBegan:Connect(function(input, busy)
+  if input.KeyCode == Enum.KeyCode.C  and not busy then
+      for _, v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Backpack:FindFirstChild("Knife") then
+            MURD = v
+        elseif not v.Backpack:FindFirstChild("Knife") then
+        if v.Character:FindFirstChild("Knife") then
+            MURD = v
+        end
+    end
+end
+        local camera = game:GetService("Workspace").CurrentCamera
+
+    camera.CFrame = CFrame.new(camera.CFrame.Position, MURD.Character.Head.Position)
+    
+        local args = {
+    [1] = 1,
+    [2] = Vector3.new(MURD.Character.HumanoidRootPart.CFrame.X,MURD.Character.HumanoidRootPart.CFrame.Y,MURD.Character.HumanoidRootPart.CFrame.Z),
+    [3] = "AH"
+    }
+
+        game:GetService("Players").LocalPlayer.Character.Gun.KnifeServer.ShootGun:InvokeServer(unpack(args))
+    end
+end)
+
+    SendNotification("Shoot Murd", "Loaded", "", "3")
+end)
+
+
+lib:CreateButton2("Kill all", "Kill all (K)", TabFrames["Game Mods"], function()
+    local MURD = nil
+local kill = false 
+local UIS = game:GetService("UserInputService")
+killed = {}
+
+function ResetKilled()
+   for i, v in pairs(killed) do
+     table.remove(killed, i)
+     end
+end
+
+function FindNewMurd()
+    for i, murd in pairs(game:GetService("Players"):GetChildren()) do
+        if murd and murd.Name ~= game:GetService("Players").LocalPlayer.Name and not table.find(killed, murd.Name) and not table.find(Whitelisted, murd.Name) then
+            MURD = murd
+            KillAll()
+        end
+    end
+end
+
+function KillAll()
+    repeat 
+        wait()
+        local args = {
+    [1] = CFrame.new(Vector3.new(MURD.Character.HumanoidRootPart.CFrame.X,MURD.Character.HumanoidRootPart.CFrame.Y - 1,MURD.Character.HumanoidRootPart.CFrame.Z - 1), Vector3.new(-0, -0, -1)),
+    [2] = Vector3.new(MURD.Character.HumanoidRootPart.Position.X + 2,MURD.Character.HumanoidRootPart.Position.Y + 1,MURD.Character.HumanoidRootPart.Position.Z - 4)
+    }
+    game:GetService("Players").LocalPlayer.Character.Knife.Throw:FireServer(unpack(args))
+    until MURD.Character.Humanoid.Health == 0
+    table.insert(killed, MURD.Name)
+    FindNewMurd()
+end
+
+UIS.InputBegan:Connect(function(input, busy)
+   if input.KeyCode == Enum.KeyCode.K and not busy then
+       kill = true
+       while kill do
+           wait()
+           FindNewMurd()
+        end
+    end
+end)
+
+UIS.InputEnded:Connect(function(input)
+   if input.KeyCode == Enum.KeyCode.K then
+       kill = false
+     --  ResetKilled()
+    end
+end)
+    SendNotification("Kill All", "Loaded", "", "3")
+end)
+
+lib:CreateButton2("Map", "Map", TabFrames.Teleport, function()
+   for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+    if v.Name == "Spawns" and v.Parent.Name ~= "Lobby" then
+        game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(Vector3.new(v.Spawn.CFrame.X,v.Spawn.CFrame.Y + 5,v.Spawn.CFrame.Z))
+        end
+    end
+end)
+
+lib:CreateButton2("Lobby", "Lobby", TabFrames.Teleport, function()
+   for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+    if v.Name == "Spawns" and v.Parent.Name == "Lobby" then
+        game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(Vector3.new(v.Spawn.CFrame.X,v.Spawn.CFrame.Y + 5,v.Spawn.CFrame.Z))
+        end
+    end
+end)
+
+lib:CreateButton2("Gun", "Gun(G)", TabFrames.Teleport, function()
+     local UIS = game:GetService("UserInputService")
+
+    UIS.InputBegan:Connect(function(input, busy)
+   if input.KeyCode == Enum.KeyCode.G and not busy then
+       game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace"):FindFirstChild("GunDrop", true).CFrame
+    end
+end)
+    SendNotification("Gun(G)", "Loaded", "", "3")
+end)
+
+lib:CreateButton2("Sheriff", "Sheriff", TabFrames.Teleport, function()
+    Sheriff = nil
+    for _, v in pairs(game:GetService("Players"):GetChildren()) do
+    if v.Backpack:FindFirstChild("Gun") then
+        Sheriff = v.Name
+    elseif not v.Backpack:FindFirstChild("Gun") then
+        if v.Character:FindFirstChild("Gun") then
+            Sheriff = v.Name
+            end
+        end
+    end
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(game:GetService("Players"):FindFirstChild(tostring(Sheriff)).Character.HumanoidRootPart.CFrame.X,game:GetService("Players"):FindFirstChild(tostring(Sheriff)).Character.HumanoidRootPart.CFrame.Y,game:GetService("Players"):FindFirstChild(tostring(Sheriff)).Character.HumanoidRootPart.CFrame.Z + 4))
+end)
+
+
+
+Others()
+WhiteList()
