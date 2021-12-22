@@ -208,16 +208,16 @@ TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton.TextSize = 14.000
 
 function Others()
-    TabFrames:WaitForChild("Others").UIGridLayout:Destroy()
+    TabFrames:WaitForChild("Credits").UIGridLayout:Destroy()
     local Title = Instance.new("TextLabel")
     local TextLabel = Instance.new("TextLabel")
     local UIListLayout = Instance.new("UIListLayout")
 
-    UIListLayout.Parent = TabFrames:WaitForChild("Others")
+    UIListLayout.Parent = TabFrames:WaitForChild("Credits")
     UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder 
 
     Title.Name = "Title"
-    Title.Parent = TabFrames:WaitForChild("Others")
+    Title.Parent = TabFrames:WaitForChild("Credits")
     Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     Title.BackgroundTransparency = 1.000
     Title.Size = UDim2.new(1, 0, 0.0403994955, 0)
@@ -229,7 +229,7 @@ function Others()
     Title.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
     Title.TextWrapped = true
 
-    TextLabel.Parent = TabFrames:WaitForChild("Others")
+    TextLabel.Parent = TabFrames:WaitForChild("Credits")
     TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     TextLabel.BackgroundTransparency = 1.000
     TextLabel.Size = UDim2.new(1, 0, 0.0403994955, 0)
@@ -322,7 +322,7 @@ lib:CreateButton("Game Mods", "Game Mods", "Tabs")
 lib:CreateButton("Teleport", "Teleport", "Tabs")
 lib:CreateButton("Farm", "Farm", "Tabs")
 lib:CreateButton("WhiteList", "WhiteList", "Tabs")
-lib:CreateButton("Others", "Others", "Tabs")
+lib:CreateButton("Credits", "Credits", "Tabs")
 -- End of tabs
 -- Visuals
 lib:CreateButton2("Esp", "Esp", TabFrames.Visuals, function()
@@ -569,7 +569,14 @@ lib:CreateButton2("Sheriff", "Sheriff", TabFrames.Teleport, function()
     game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(game:GetService("Players"):FindFirstChild(tostring(Sheriff)).Character.HumanoidRootPart.CFrame.X,game:GetService("Players"):FindFirstChild(tostring(Sheriff)).Character.HumanoidRootPart.CFrame.Y,game:GetService("Players"):FindFirstChild(tostring(Sheriff)).Character.HumanoidRootPart.CFrame.Z + 4))
 end)
 
+local UIS = game:GetService("UserInputService")
 
+
+UIS.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.LeftAlt then
+        ScreenGui.Enabled = not ScreenGui.Enabled
+    end
+end)
 
 Others()
 WhiteList()
